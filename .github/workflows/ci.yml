@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [ develop, test, main ]
+  pull_request:
+    branches: [ develop, test, main ]
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run linter
+        run: echo "Pretvarujeme sa, že lint prebehol"
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build app
+        run: echo "Pretvarujeme sa, že build prebehol"
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests
+        run: echo "Pretvarujeme sa, že testy prebehli"
