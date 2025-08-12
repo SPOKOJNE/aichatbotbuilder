@@ -95,7 +95,7 @@ export default function Home() {
             width={16}
             height={16}
           />
-          Go to nextjs.org →
+          Choď na nextjs.org →
         </a>
         <div style={{ padding: '8px', border: '1px solid #eee', borderRadius: 8, display: 'inline-block', marginBottom: 12 }}>
           ENV: <b>DEV</b> • version: {process.env.NEXT_PUBLIC_APP_VERSION ?? '0.0.0'}
