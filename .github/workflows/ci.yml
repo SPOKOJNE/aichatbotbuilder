@@ -18,8 +18,9 @@ jobs:
           node-version: 22
           cache: 'pnpm'
       - run: corepack enable
+      - run: corepack prepare pnpm@10.14.0 --activate
       - run: pnpm -v
-      - run: pnpm install
+      - run: pnpm install --no-frozen-lockfile
       - run: pnpm -C apps/web lint || echo "no lint script yet"
 
   build:
@@ -32,7 +33,9 @@ jobs:
           node-version: 22
           cache: 'pnpm'
       - run: corepack enable
-      - run: pnpm install
+      - run: corepack prepare pnpm@10.14.0 --activate
+      - run: pnpm -v
+      - run: pnpm install --no-frozen-lockfile
       - run: pnpm -C apps/web build
 
   test:
@@ -45,5 +48,7 @@ jobs:
           node-version: 22
           cache: 'pnpm'
       - run: corepack enable
-      - run: pnpm install
+      - run: corepack prepare pnpm@10.14.0 --activate
+      - run: pnpm -v
+      - run: pnpm install --no-frozen-lockfile
       - run: echo "no tests yet" && exit 0

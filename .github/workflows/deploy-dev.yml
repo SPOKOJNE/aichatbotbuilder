@@ -18,7 +18,9 @@ jobs:
           cache: 'pnpm'
 
       - run: corepack enable
-      - run: pnpm install
+      - run: corepack prepare pnpm@10.14.0 --activate
+      - run: pnpm -v
+      - run: pnpm install --no-frozen-lockfile
       - run: pnpm -C apps/web build   # vyrobí apps/web/out
 
       - name: Install Firebase CLI
