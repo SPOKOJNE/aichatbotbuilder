@@ -3,23 +3,47 @@ name: CI
 on:
   push:
     branches: [develop, test, main]
-  workflow_dispatch:
+  pull_request:
+    branches: [develop, test, main]
+  workflow_dispatch: {}
 
 jobs:
   lint:
     name: CI / lint
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Linting..."
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: corepack enable
+      - run: pnpm -v
+      - run: pnpm install
+      - run: pnpm -C apps/web lint || echo "no lint script yet"
 
   build:
     name: CI / build
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Building..."
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: corepack enable
+      - run: pnpm install
+      - run: pnpm -C apps/web build
 
   test:
     name: CI / test
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Testing..."
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: corepack enable
+      - run: pnpm install
+      - run: echo "no tests yet" && exit 0

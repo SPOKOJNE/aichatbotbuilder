@@ -1,0 +1,28 @@
+name: Deploy DEV
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch: {}
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - run: corepack enable
+      - run: pnpm install
+      - run: pnpm -C apps/web build   # vyrobí apps/web/out
+
+      - name: Install Firebase CLI
+        run: pnpm add -g firebase-tools
+
+      - name: Deploy to Firebase Hosting (DEV)
+        run: firebase deploy --only hosting --project aichatbotbuilder-dev --token "${{ secrets.FIREBASE_TOKEN }}"
