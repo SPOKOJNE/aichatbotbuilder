@@ -16,12 +16,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
-      - run: corepack enable
-      - run: corepack prepare pnpm@10.14.0 --activate
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+          run_install: false
       - run: pnpm -v
-      - run: pnpm install --no-frozen-lockfile
-      - run: pnpm -C apps/web lint || echo "no lint script yet"
+      - run: pnpm install
+        working-directory: apps/web
+      - run: pnpm lint
+        working-directory: apps/web
+        # ak lint skript ešte nemáš, dočasne použi: run: 'echo "no lint"'
 
   build:
     name: CI / build
@@ -31,12 +35,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
-      - run: corepack enable
-      - run: corepack prepare pnpm@10.14.0 --activate
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+          run_install: false
       - run: pnpm -v
-      - run: pnpm install --no-frozen-lockfile
-      - run: pnpm -C apps/web build
+      - run: pnpm install
+        working-directory: apps/web
+      - run: pnpm build
+        working-directory: apps/web
 
   test:
     name: CI / test
@@ -46,9 +53,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
-      - run: corepack enable
-      - run: corepack prepare pnpm@10.14.0 --activate
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+          run_install: false
       - run: pnpm -v
-      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm install
+        working-directory: apps/web
       - run: echo "no tests yet" && exit 0
